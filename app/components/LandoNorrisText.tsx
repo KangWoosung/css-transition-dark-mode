@@ -29,7 +29,7 @@ const defaultLightStyle: React.CSSProperties = {
 
 const defaultDarkStyle: React.CSSProperties = {
   ...defaultStyle,
-  color: "#fbbf24", // amber-400 (다크모드에서 더 부드러운 골드)
+  color: "#fbbf24", // amber-400 (For dark mode, more gold-ish)
 };
 
 const LandoNorrisText = ({
@@ -49,16 +49,16 @@ const LandoNorrisText = ({
   const [isDark, setIsDark] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  // 테마 감지 및 업데이트
+  // Detect theme and update
   useEffect(() => {
     const checkTheme = () => {
       setIsDark(document.documentElement.classList.contains("dark"));
     };
 
-    // 초기 테마 확인
+    // Check initial theme
     checkTheme();
 
-    // MutationObserver를 사용하여 클래스 변경 감지
+    // Use MutationObserver to detect class changes
     const observer = new MutationObserver(checkTheme);
     observer.observe(document.documentElement, {
       attributes: true,
@@ -73,12 +73,12 @@ const LandoNorrisText = ({
 
     wrapTextInSpans(containerRef.current, locale);
 
-    // sibling-index() 폴리필: 각 span에 순차적으로 애니메이션 딜레이 적용
-    // Firefox와 Safari에서 sibling-index()를 지원하지 않으므로 JavaScript로 구현
+    // sibling-index() polyfill: Apply animation delay sequentially to each span
+    // Firefox and Safari do not support sibling-index(), so implement it in JavaScript
     const spans = containerRef.current.querySelectorAll("span");
     spans.forEach((span, index) => {
       const spanElement = span as HTMLElement;
-      // CSS 변수를 사용하여 animation-delay 설정 (더 유연함)
+      // Use CSS variables to set animation-delay (more flexible)
       spanElement.style.setProperty("--animation-delay", `${index}`);
       spanElement.style.setProperty(
         "--animation-delay-factor",
@@ -88,7 +88,7 @@ const LandoNorrisText = ({
     });
   }, [children, locale, animationDelayFactor]);
 
-  // 테마에 따라 기본 스타일 선택
+  // Select default style based on theme
   const themeStyle = isDark ? defaultDarkStyle : defaultLightStyle;
   const mergedStyle = style ? { ...themeStyle, ...style } : themeStyle;
 

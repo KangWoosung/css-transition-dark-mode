@@ -28,7 +28,7 @@ const ThemeSelector = () => {
     document.documentElement.classList.add(currentTheme);
   }, []);
 
-  // 초기 마운트 시 테마 설정
+  // Set theme on initial mount
   useEffect(() => {
     updateTheme(theme);
     // eslint-disable-next-line react-hooks/exhaustive-deps

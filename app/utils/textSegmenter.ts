@@ -1,10 +1,10 @@
 /**
- * 텍스트를 그래핀 클러스터 단위로 분할하는 유틸리티 함수
- * 이모지, 한글, 복합 문자 등을 올바르게 처리합니다.
+ * Utility function to segment text into grapheme clusters
+ * Handles emojis, Korean, complex characters, etc. correctly.
  *
- * @param text - 분할할 텍스트
- * @param locale - 로케일 (기본값: "en")
- * @returns 분할된 문자 배열
+ * @param text - Text to segment
+ * @param locale - Locale (default: "en")
+ * @returns Array of segmented characters
  */
 export function segmentText(text: string, locale: string = "en"): string[] {
   if (!text) return [];
@@ -16,12 +16,12 @@ export function segmentText(text: string, locale: string = "en"): string[] {
 }
 
 /**
- * HTML 요소의 텍스트를 각 문자를 span으로 감싸도록 변환합니다.
- * 이모지, 한글, 복합 문자 등을 올바르게 처리합니다.
+ * Convert HTML element's text to wrap each character in a span
+ * Handles emojis, Korean, complex characters, etc. correctly.
  *
- * @param element - 변환할 HTML 요소
- * @param locale - 로케일 (기본값: "en")
- * @param preserveWhitespace - 공백을 non-breaking space로 변환할지 여부 (기본값: true)
+ * @param element - Element to convert
+ * @param locale - Locale (default: "en")
+ * @param preserveWhitespace - Whether to convert whitespace to non-breaking space (default: true)
  */
 export function wrapTextInSpans(
   element: HTMLElement,
@@ -34,11 +34,11 @@ export function wrapTextInSpans(
   // aria-label
   element.ariaLabel = text;
 
-  // 기존 내용을 지우고 각 문자를 span으로 감싸기
+  // Clear existing content and wrap each character in a span
   element.innerHTML = "";
   segments.forEach((segment) => {
     const span = document.createElement("span");
-    // 공백을 non-breaking space로 처리
+    // Convert whitespace to non-breaking space
     span.textContent =
       preserveWhitespace && segment === " " ? "\u00A0" : segment;
     element.appendChild(span);

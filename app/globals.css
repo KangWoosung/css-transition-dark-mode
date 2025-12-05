@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* 클래스 기반 다크모드 활성화 - prefers-color-scheme 무시 */
+/* Enable class-based dark mode - ignore prefers-color-scheme */
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -22,7 +22,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* 클래스 기반 다크모드만 사용 - prefers-color-scheme 무시 */
+/* Use class-based dark mode only - ignore prefers-color-scheme */
 .dark {
   color-scheme: dark;
 }

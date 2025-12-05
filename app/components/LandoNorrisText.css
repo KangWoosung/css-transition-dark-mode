@@ -1,4 +1,4 @@
-/* LandoNorrisText 컴포넌트 전용 CSS 애니메이션 
+/* LandoNorrisText component specific CSS animation
 
 2025-12-06 00:02:33
 sibling-index() is not fully supported in FF & iOS Safari.
@@ -17,22 +17,22 @@ sibling-index() is not fully supported in FF & iOS Safari.
 .landoNorrisText span {
   position: relative;
   display: inline-block;
-  /* 기본 상태: 애니메이션 없음 (초기 로드 시 실행 방지) */
+  /* Default state: no animation (prevent initial load execution) */
 }
 
 .landoNorrisText.hovered span {
-  /* hover 상태: letterUp 애니메이션 */
+  /* Hover state: letterUp animation */
   animation: letterUp 0.5s ease-out forwards;
   /* animation-delay for chrome  */
   /* animation-delay: calc(sibling-index() * 0.1s); */
-  /* animation-delay는 JavaScript로 설정된 CSS 변수 사용 (sibling-index() 폴리필) */
+  /* Use JavaScript-set CSS variables for animation-delay (sibling-index() polyfill) */
   /* animation-delay: calc(var(--animation-delay) * var(--animation-delay-factor)); */
   animation-delay: calc(var(--animation-delay) * 0.025s);
 }
 
-/* letterDown 애니메이션이 활성화된 경우에만 적용 */
+/* Apply only if letterDown animation is enabled */
 .landoNorrisText.enable-letter-down:not(.hovered) span {
-  /* hover out 상태: letterDown 애니메이션 (원래 위치로 복귀) */
+  /* Hover out state: letterDown animation (return to original position) */
   animation: letterDown 0.5s ease-out forwards;
   animation-delay: calc(var(--animation-delay) * 0.025s);
 }
