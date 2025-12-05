@@ -1,8 +1,18 @@
 @import "tailwindcss";
 
+/* 클래스 기반 다크모드 활성화 - prefers-color-scheme 무시 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --dark-background: #0a0a0a;
+  --dark-foreground: #ededed;
+  --light-background: #ffffff;
+  --light-foreground: #171717;
+
+  --background: var(--light-background);
+  --foreground: var(--light-foreground);
+
+  color-scheme: light;
 }
 
 @theme inline {
@@ -12,11 +22,13 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* 클래스 기반 다크모드만 사용 - prefers-color-scheme 무시 */
+.dark {
+  color-scheme: dark;
+}
+
+.light {
+  color-scheme: light;
 }
 
 body {
