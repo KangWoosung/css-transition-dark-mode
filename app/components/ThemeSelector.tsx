@@ -4,7 +4,12 @@ import { Moon, Sun } from "lucide-react";
 
 const ThemeSelector = () => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const toggleTheme = (newTheme: "light" | "dark", e: React.MouseEvent) => {
+    // Prevent multiple clicks during animation
+    if (isDisabled) return;
+
     const x = e.clientX;
     const y = e.clientY;
     const endRadius = Math.hypot(
@@ -17,6 +22,15 @@ const ThemeSelector = () => {
     document.documentElement.style.setProperty("--r", endRadius + "px");
 
     setTheme(newTheme);
+
+    // Disable cursor and pointer events for 0.5 seconds during animation
+    setIsDisabled(true);
+    document.body.style.cursor = "not-allowed";
+
+    setTimeout(() => {
+      setIsDisabled(false);
+      document.body.style.cursor = "";
+    }, 500);
   };
 
   const updateTheme = useCallback((currentTheme: "light" | "dark") => {
@@ -47,7 +61,13 @@ const ThemeSelector = () => {
 
   return (
     <div className="flex gap-md items-center justify-center">
-      <div className="flex gap-md items-center justify-center rounded-full dark:bg-gray-800 bg-gray-200  p-2 cursor-pointer">
+      <div
+        className={`flex gap-md items-center justify-center rounded-full dark:bg-gray-800 bg-gray-200 p-2 ${
+          isDisabled
+            ? "cursor-not-allowed pointer-events-none opacity-50"
+            : "cursor-pointer"
+        }`}
+      >
         {theme === "dark" ? (
           <Moon onClick={(e) => toggleTheme("light", e)} />
         ) : (

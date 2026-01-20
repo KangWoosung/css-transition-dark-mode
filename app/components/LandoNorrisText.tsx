@@ -3,8 +3,10 @@
 Based on Wes, Scott & CJ's sandbox play code:
 https://www.youtube.com/watch?v=9H34nxxVEgc
 
-The Text is not duplicated but box shadow makes it look like duplicated.
+The Text is not duplicated but box shadow makes it look like it's duplicated.
 The CSS file LandoNorrisText.css is required.
+
+Emoji is not working correctly, because it's just a text-shadow.
 
 */
 "use client";
@@ -20,6 +22,8 @@ const defaultStyle: React.CSSProperties = {
   letterSpacing: "1px",
   lineHeight: "1",
   overflow: "hidden",
+  cursor: "pointer",
+  width: "fit-content",
 };
 
 const defaultLightStyle: React.CSSProperties = {
@@ -32,19 +36,23 @@ const defaultDarkStyle: React.CSSProperties = {
   color: "#fbbf24", // amber-400 (For dark mode, more gold-ish)
 };
 
+type LandoNorrisTextProps = {
+  children: React.ReactNode | string;
+  style?: React.CSSProperties;
+  animationDelayFactor?: number;
+  locale?: string;
+  enableLetterDown?: boolean;
+  hoverColor?: string;
+};
+
 const LandoNorrisText = ({
   children,
   style,
   animationDelayFactor = 0.05,
   locale = "en",
   enableLetterDown = true,
-}: {
-  children: React.ReactNode | string;
-  style?: React.CSSProperties;
-  animationDelayFactor?: number;
-  locale?: string;
-  enableLetterDown?: boolean;
-}) => {
+  hoverColor,
+}: LandoNorrisTextProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDark, setIsDark] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -92,13 +100,20 @@ const LandoNorrisText = ({
   const themeStyle = isDark ? defaultDarkStyle : defaultLightStyle;
   const mergedStyle = style ? { ...themeStyle, ...style } : themeStyle;
 
+  // Set hover color as CSS variable if provided
+  const containerStyle = hoverColor
+    ? { ...mergedStyle, "--hover-color": hoverColor }
+    : mergedStyle;
+
   return (
     <div
       ref={containerRef}
       className={`landoNorrisText ${isDark ? "dark" : "light"} ${
         isHovered ? "hovered" : ""
-      } ${enableLetterDown ? "enable-letter-down" : ""}`}
-      style={mergedStyle}
+      } ${enableLetterDown ? "enable-letter-down" : ""} ${
+        hoverColor ? "has-hover-color" : ""
+      }`}
+      style={containerStyle}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

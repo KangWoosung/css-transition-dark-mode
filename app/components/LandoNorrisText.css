@@ -18,11 +18,13 @@ sibling-index() is not fully supported in FF & iOS Safari.
   position: relative;
   display: inline-block;
   /* Default state: no animation (prevent initial load execution) */
+  /* Smooth color transition for hover color */
+  transition: color 0.3s ease-out;
 }
 
 .landoNorrisText.hovered span {
   /* Hover state: letterUp animation */
-  animation: letterUp 0.5s ease-out forwards;
+  animation: letterUp 0.3s ease-out forwards;
   /* animation-delay for chrome  */
   /* animation-delay: calc(sibling-index() * 0.1s); */
   /* Use JavaScript-set CSS variables for animation-delay (sibling-index() polyfill) */
@@ -30,10 +32,15 @@ sibling-index() is not fully supported in FF & iOS Safari.
   animation-delay: calc(var(--animation-delay) * 0.025s);
 }
 
+/* Apply hover color if provided */
+.landoNorrisText.has-hover-color.hovered span {
+  color: var(--hover-color);
+}
+
 /* Apply only if letterDown animation is enabled */
 .landoNorrisText.enable-letter-down:not(.hovered) span {
   /* Hover out state: letterDown animation (return to original position) */
-  animation: letterDown 0.5s ease-out forwards;
+  animation: letterDown 0.3s ease-out forwards;
   animation-delay: calc(var(--animation-delay) * 0.025s);
 }
 
