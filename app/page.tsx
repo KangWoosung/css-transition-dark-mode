@@ -88,11 +88,12 @@ export default function Home() {
           <div className="flex flex-row gap-2 my-4" >
             <TechIcons name="javascript"  />
             <TechIcons name="typescript"  />
-            <TechIcons name="nginx"  />
+            <TechIcons name="node_js" invert={true} />
             <TechIcons name="react"  />
             <TechIcons name="vite"  />
             <TechIcons name="next_js" invert={true}  />
             <TechIcons name="expo" invert={true}  />
+            <TechIcons name="react_query"  />
             <TechIcons name="zustand"  />
             <TechIcons name="supabase"  />
             <TechIcons name="postgresql"  />
