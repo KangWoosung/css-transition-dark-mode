@@ -57,3 +57,18 @@ sibling-index() is not fully supported in FF & iOS Safari.
     transform: translateY(0);
   }
 }
+
+/* Skip animations when accessibility mode is enabled */
+.landoNorrisText.no-animations span {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Keep hover color transition even when animations are disabled */
+.landoNorrisText.no-animations.has-hover-color span {
+  transition: color 0s !important;
+}
+
+.landoNorrisText.no-animations.has-hover-color.hovered span {
+  color: var(--hover-color);
+}

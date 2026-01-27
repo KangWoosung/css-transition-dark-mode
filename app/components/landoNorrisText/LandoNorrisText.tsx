@@ -11,8 +11,9 @@ Emoji is not working correctly, because it's just a text-shadow.
 */
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { wrapTextInSpans } from "../utils/textSegmenter";
+import { wrapTextInSpans } from "../../../utils/textSegmenter";
 import "./LandoNorrisText.css";
+import { useSettingsStore } from "@/zustand/useSettingsStore";
 
 const defaultStyle: React.CSSProperties = {
   fontSize: "30px",
@@ -57,6 +58,9 @@ const LandoNorrisText = ({
   const [isDark, setIsDark] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
+  // Zustand Store
+  const { animationsEnabled } = useSettingsStore();
+
   // Detect theme and update
   useEffect(() => {
     const checkTheme = () => {
@@ -81,6 +85,12 @@ const LandoNorrisText = ({
 
     wrapTextInSpans(containerRef.current, locale);
 
+    // Skip animation delay injection if animations are disabled
+    if (!animationsEnabled) {
+      //  console.log("Animations disabled - skipping animation delay injection");
+      return;
+    }
+
     // sibling-index() polyfill: Apply animation delay sequentially to each span
     // Firefox and Safari do not support sibling-index(), so implement it in JavaScript
     const spans = containerRef.current.querySelectorAll("span");
@@ -92,9 +102,9 @@ const LandoNorrisText = ({
         "--animation-delay-factor",
         `${animationDelayFactor.toString()}s`
       );
-      console.log("index", index);
+      // console.log("index", index);
     });
-  }, [children, locale, animationDelayFactor]);
+  }, [children, locale, animationDelayFactor, animationsEnabled]);
 
   // Select default style based on theme
   const themeStyle = isDark ? defaultDarkStyle : defaultLightStyle;
@@ -112,10 +122,11 @@ const LandoNorrisText = ({
         isHovered ? "hovered" : ""
       } ${enableLetterDown ? "enable-letter-down" : ""} ${
         hoverColor ? "has-hover-color" : ""
-      }`}
+      } ${!animationsEnabled ? "no-animations" : ""}`}
       style={containerStyle}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      suppressHydrationWarning
     >
       {children}
     </div>

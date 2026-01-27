@@ -9,6 +9,11 @@
   --light-background: #ffffff;
   --light-foreground: #171717;
 
+  --link-color: #007bff;
+  --link-color-hover: #0056b3;
+  --dark-link-color: #007bff;
+  --dark-link-color-hover: #0056b3;
+
   --background: var(--light-background);
   --foreground: var(--light-foreground);
 
@@ -37,7 +42,16 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+a {
+  color: var(--link-color);
+  text-decoration: underline;
+  &:hover {
+    color: var(--link-color-hover);
+    text-decoration: underline;
+  }
+}
+
 #progress {
   animation: grow-progress 1s linear forwards;
-  animation-timeline: scroll( root block );
+  animation-timeline: scroll(root block);
 }
